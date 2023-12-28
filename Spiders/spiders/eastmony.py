@@ -12,7 +12,7 @@ class EasetMoneySpider(scrapy.Spider):
     
     def start_requests(self):
         for url in self.start_urls:
-            yield SplashRequest(url, self.parse)
+            yield SplashRequest(url, self.parse, args={'wait': 0.5})
             
     def parse(self, response):
         # print(response.text)
@@ -39,7 +39,7 @@ class EasetMoneySpider(scrapy.Spider):
             print(item)
             yield item
             
-        if len(info) <= 20 and self.curPage < 300:
+        if len(info) == 20 and self.curPage < 300:
             self.curPage = self.curPage + 1
             # 找到按钮并模拟点击
             script = """
@@ -52,7 +52,7 @@ class EasetMoneySpider(scrapy.Spider):
                 local button = splash:select('#main-table_paginate > a.paginte_go')
                 button:mouse_click()
 
-                splash:wait(5) -- 等待点击后的操作完成，根据需要调整等待时间
+                splash:wait(2) -- 等待点击后的操作完成，根据需要调整等待时间
 
                 return {
                     html = splash:html(),
@@ -60,5 +60,5 @@ class EasetMoneySpider(scrapy.Spider):
                 }
             end
             """ % self.curPage
-            yield SplashRequest(response.url, self.parse, dont_filter=True, endpoint='execute', args={'lua_source': script})
+            yield SplashRequest(response.url, self.parse, dont_filter=True, endpoint='execute', args={'lua_source': script, 'wait': 0.5})
 
