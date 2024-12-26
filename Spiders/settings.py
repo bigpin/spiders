@@ -98,3 +98,12 @@ FEED_EXPORT_ENCODING = "utf-8"
 SPLASH_URL = 'http://localhost:8050'
 DUPEFILTER_CLASS = 'scrapy_splash.SplashAwareDupeFilter'
 HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
+
+# 设置CSV导出
+FEED_EXPORTERS = {
+    'csv': 'scrapy.exporters.CsvItemExporter',
+}
+
+FEED_EXPORT_ENCODING = 'utf-8-sig'
+FEED_EXPORT_FIELDS = None  # 允许动态设置字段
+FEEDS = {}  # 允许在spider中覆盖设置

@@ -23,7 +23,7 @@ class SpidersPipeline:
         print(spider.name, "爬虫开始")
     
     def process_item(self, item, spider):
-        print(item)
+        # print(item)
         self.cvs_file.writerow(item.values())
         return item
 

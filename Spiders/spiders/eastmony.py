@@ -36,7 +36,7 @@ class EasetMoneySpider(scrapy.Spider):
             item["turnover_rate"] = stock_info[15].xpath("./text()").extract()[0]
             item["pe"] = stock_info[16].xpath("./text()").extract()[0]
             item["pb"] = stock_info[17].xpath("./text()").extract()[0]
-            print(item)
+            print(item['stock_id'], item['stock_name'])
             yield item
             
         if len(info) == 20 and self.curPage < 300:
@@ -45,14 +45,14 @@ class EasetMoneySpider(scrapy.Spider):
             script = """
             function main(splash, args)
                 splash:go(args.url)
-                splash:wait(0.5)
+                splash:wait(0.2)
 
                 -- 通过选择器找到按钮并模拟点击
                 splash:runjs("document.querySelector('#main-table_paginate > input').value = '%d';")
                 local button = splash:select('#main-table_paginate > a.paginte_go')
                 button:mouse_click()
 
-                splash:wait(2) -- 等待点击后的操作完成，根据需要调整等待时间
+                splash:wait(1) -- 等待点击后的操作完成，根据需要调整等待时间
 
                 return {
                     html = splash:html(),
@@ -60,5 +60,5 @@ class EasetMoneySpider(scrapy.Spider):
                 }
             end
             """ % self.curPage
-            yield SplashRequest(response.url, self.parse, dont_filter=True, endpoint='execute', args={'lua_source': script, 'wait': 0.5})
+            yield SplashRequest(response.url, self.parse, dont_filter=True, endpoint='execute', args={'lua_source': script, 'wait': 0.2})
 
