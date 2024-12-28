@@ -9,7 +9,7 @@ from itemadapter import ItemAdapter
 import csv
 from items import LianjiaItem, EastMoneyItem
 
-class SpidersPipeline:
+class WriteCVSFilePipeline:
     cvs_file = None
     file_handler = None
     

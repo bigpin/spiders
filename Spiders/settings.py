@@ -66,7 +66,7 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://docs.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-    "Spiders.pipelines.SpidersPipeline": 300,
+    # 'Spiders.pipelines.WriteCVSFilePipeline': 300,  # 注释掉这行来禁用写文件
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
